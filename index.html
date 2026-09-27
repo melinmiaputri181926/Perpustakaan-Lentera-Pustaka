@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Perpustakaan Digital</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* =========================
+           HALAMAN LOGIN
+        ========================= */
+
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        }
+
+        .login-box {
+            width: 380px;
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .login-logo .icon {
+            font-size: 55px;
+        }
+
+        .login-logo h1 {
+            margin-top: 10px;
+            color: #4f46e5;
+            font-size: 25px;
+        }
+
+        .login-logo p {
+            color: #777;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .input-group input:focus {
+            border-color: #4f46e5;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 9px;
+            background: #4f46e5;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background: #3730a3;
+        }
+
+        .error {
+            color: #dc2626;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .login-info {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+
+
+        /* =========================
+           DASHBOARD
+        ========================= */
+
+        .dashboard {
+            display: none;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 230px;
+            height: 100vh;
+            background: #4f46e5;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo h2 {
+            font-size: 21px;
+        }
+
+        .logo p {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin: 8px 0;
+        }
+
+        .menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 13px;
+            border-radius: 8px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .logout {
+            margin-top: 25px;
+        }
+
+        .logout button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #ef4444;
+            color: white;
+            cursor: pointer;
+        }
+
+        .logout button:hover {
+            background: #dc2626;
+        }
+
+        .content {
+            margin-left: 230px;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+        }
+
+        .header p {
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .profile {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+
+        /* STATISTIK */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+        }
+
+        .card h3 {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+
+        /* SEARCH */
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+
+        /* BUKU */
+
+        .section-title {
+            margin-bottom: 15px;
+        }
+
+        .books {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .book {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+            transition: 0.3s;
+        }
+
+        .book:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-cover {
+            height: 150px;
+            background: #6366f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .book-info {
+            padding: 18px;
+        }
+
+        .book-info h3 {
+            margin-bottom: 8px;
+        }
+
+        .book-info p {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .btn {
+            border: none;
+            background: #4f46e5;
+            color: white;
+            padding: 9px 14px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #3730a3;
+        }
+
+
+        /* TABLE */
+
+        .table-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            background: #f5f5ff;
+            color: #4f46e5;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .books {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .menu {
+                display: flex;
+                gap: 5px;
+                overflow-x: auto;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .stats,
+            .books {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                display: block;
+            }
+
+            .profile {
+                margin-top: 15px;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HALAMAN LOGIN
+========================= -->
+
+<div class="login-page" id="loginPage">
+
+    <div class="login-box">
+
+        <div class="login-logo">
+            <div class="icon">📚</div>
+
+            <h1>Perpustakaan Digital</h1>
+
+            <p>Silakan login untuk melanjutkan</p>
+        </div>
+
+
+        <div class="input-group">
+
+            <label>Username</label>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Masukkan username"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Masukkan password"
+            >
+
+        </div>
+
+
+        <button
+            class="login-button"
+            onclick="login()"
+        >
+            🔐 Login
+        </button>
+
+
+        <div
+            class="error"
+            id="errorMessage"
+        >
+            Username atau password salah!
+        </div>
+
+
+        <div class="login-info">
+
+            Demo Login:<br>
+            Username: <b>admin</b><br>
+            Password: <b>perpus123</b>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<div
+    class="dashboard"
+    id="dashboard"
+>
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>📚 PERPUSTAKAAN</h2>
+
+            <p>Digital Library</p>
+
+        </div>
+
+
+        <ul class="menu">
+
+            <li>
+                <a
+                    href="#"
+                    class="active"
+                >
+                    🏠 Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="#buku">
+                    📚 Daftar Buku
+                </a>
+            </li>
+
+            <li>
+                <a href="#peminjaman">
+                    📖 Peminjaman
+                </a>
+            </li>
+
+            <li>
+                <a href="#anggota">
+                    👥 Anggota
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="logout">
+
+            <button onclick="logout()">
+                🚪 Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+
+        <div class="header">
+
+            <div>
+
+                <h1>Dashboard</h1>
+
+                <p>
+                    Selamat datang di Perpustakaan Digital
+                </p>
+
+            </div>
+
+
+            <div class="profile">
+
+                👤 Admin
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STATISTIK -->
+
+        <section class="stats">
+
+            <div class="card">
+
+                <h3>Total Buku</h3>
+
+                <div class="number">
+                    1.250
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Buku Tersedia</h3>
+
+                <div class="number">
+                    980
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Sedang Dipinjam</h3>
+
+                <div class="number">
+                    270
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Total Anggota</h3>
+
+                <div class="number">
+                    350
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SEARCH -->
+
+        <section class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔎 Cari judul buku atau penulis..."
+                onkeyup="searchBook()"
+            >
+
+        </section>
+
+
+
+        <!-- DAFTAR BUKU -->
+
+        <section id="buku">
+
+            <h2 class="section-title">
+                📚 Daftar Buku
+            </h2>
+
+
+            <div
+                class="books"
+                id="bookList"
+            >
+
+
+                <div class="book">
+
+                    <div class="book-cover">
+                        📕
+                    </div>
+
+                    <div class="book-info">
+
+                        <h3>
+                            Belajar Pemrograman
+                        </h3>
+
+                        <p>
+                            Penulis: Andi Pratama
+                        </p>
+
+                        <button
+                            class="btn"
+                            onclick="pinjam('Belajar Pemrograman')"
+                        >
+                            Pinjam
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="book">
+
+                    <div class="book-cover">
+                        📘
+                    </div>
+
+                    <div class="book-info">
+
+                        <h3>
+                            Dasar Jaringan Komputer
+                        </h3>
+
+                        <p>
+                            Penulis: Budi Santoso
+                        </p>
+
+                        <button
+                            class="btn"
+                            onclick="pinjam('Dasar Jaringan Komputer')"
+                        >
+                            Pinjam
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="book">
+
+                    <div class="book-cover">
+                        📗
+                    </div>
+
+                    <div class="book-info">
+
+                        <h3>
+                            HTML & CSS untuk Pemula
+                        </h3>
+
+                        <p>
+                            Penulis: Rina Lestari
+                        </p>
+
+                        <button
+                            class="btn"
+                            onclick="pinjam('HTML & CSS untuk Pemula')"
+                        >
+                            Pinjam
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="book">
+
+                    <div class="book-cover">
+                        📙
+                    </div>
+
+                    <div class="book-info">
+
+                        <h3>
+                            Linux untuk Pemula
+                        </h3>
+
+                        <p>
+                            Penulis: Dimas Saputra
+                        </p>
+
+                        <button
+                            class="btn"
+                            onclick="pinjam('Linux untuk Pemula')"
+                        >
+                            Pinjam
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="book">
+
+                    <div class="book-cover">
+                        📔
+                    </div>
+
+                    <div class="book-info">
+
+                        <h3>
+                            Jaringan MikroTik
+                        </h3>
+
+                        <p>
+                            Penulis: Fajar Nugroho
+                        </p>
+
+                        <button
+                            class="btn"
+                            onclick="pinjam('Jaringan MikroTik')"
+                        >
+                            Pinjam
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="book">
+
+                    <div class="book-cover">
+                        📓
+                    </div>
+
+                    <div class="book-info">
+
+                        <h3>
+                            Belajar Database
+                        </h3>
+
+                        <p>
+                            Penulis: Siti Rahma
+                        </p>
+
+                        <button
+                            class="btn"
+                            onclick="pinjam('Belajar Database')"
+                        >
+                            Pinjam
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- PEMINJAMAN -->
+
+        <section
+            class="table-section"
+            id="peminjaman"
+        >
+
+            <h2>
+                📖 Data Peminjaman
+            </h2>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Nama</th>
+
+                        <th>Buku</th>
+
+                        <th>Tanggal</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <td>Putri</td>
+
+                        <td>
+                            Dasar Jaringan Komputer
+                        </td>
+
+                        <td>
+                            20 September 2026
+                        </td>
+
+                        <td>
+                            <span class="status">
+                                Dipinjam
+                            </span>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>Akbar</td>
+
+                        <td>
+                            Belajar Pemrograman
+                        </td>
+
+                        <td>
+                            22 September 2026
+                        </td>
+
+                        <td>
+                            <span class="status">
+                                Dipinjam
+                            </span>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+
+        <!-- ANGGOTA -->
+
+        <section
+            class="table-section"
+            id="anggota"
+        >
+
+            <h2>
+                👥 Data Anggota
+            </h2>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>No</th>
+
+                        <th>Nama</th>
+
+                        <th>Kelas</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <td>1</td>
+
+                        <td>Putri</td>
+
+                        <td>X TKJ</td>
+
+                        <td>
+                            <span class="status">
+                                Aktif
+                            </span>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>2</td>
+
+                        <td>Akbar</td>
+
+                        <td>X TKJ</td>
+
+                        <td>
+                            <span class="status">
+                                Aktif
+                            </span>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>3</td>
+
+                        <td>Dita</td>
+
+                        <td>X TKJ</td>
+
+                        <td>
+                            <span class="status">
+                                Aktif
+                            </span>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+
+    // =========================
+    // LOGIN
+    // =========================
+
+    function login() {
+
+        const username =
+            document.getElementById("username").value;
+
+        const password =
+            document.getElementById("password").value;
+
+
+        if (
+            username === "admin" &&
+            password === "perpus123"
+        ) {
+
+            document.getElementById("loginPage")
+                .style.display = "none";
+
+            document.getElementById("dashboard")
+                .style.display = "block";
+
+        } else {
+
+            document.getElementById("errorMessage")
+                .style.display = "block";
+
+        }
+
+    }
+
+
+
+    // =========================
+    // LOGOUT
+    // =========================
+
+    function logout() {
+
+        document.getElementById("dashboard")
+            .style.display = "none";
+
+        document.getElementById("loginPage")
+            .style.display = "flex";
+
+        document.getElementById("username").value = "";
+
+        document.getElementById("password").value = "";
+
+        document.getElementById("errorMessage")
+            .style.display = "none";
+
+    }
+
+
+
+    // =========================
+    // PENCARIAN BUKU
+    // =========================
+
+    function searchBook() {
+
+        let input =
+            document.getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+
+        let books =
+            document.querySelectorAll(".book");
+
+
+        books.forEach(function(book) {
+
+            let text =
+                book.innerText.toLowerCase();
+
+
+            if (text.includes(input)) {
+
+                book.style.display = "block";
+
+            } else {
+
+                book.style.display = "none";
+
+            }
+
+        });
+
+    }
+
+
+
+    // =========================
+    // PEMINJAMAN
+    // =========================
+
+    function pinjam(judul) {
+
+        alert(
+            "Buku \"" +
+            judul +
+            "\" berhasil dipilih untuk dipinjam!"
+        );
+
+    }
+
+</script>
+
+</body>
+</html>
